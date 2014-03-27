@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MP3Diddly</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_close">Close</string>
+    <string name="action_search">Search</string>
+    <string name="action_status">Status</string>
+    <string name="string_settings">Settings</string>
+    <string name="string_search">Search</string>    
+    <string name="string_status">Stat</string>
+
+    <string name="location_prompt">Storage location</string>
+    <string-array name="locations_array">
+        <item>Media</item>
+        <item>DCIM</item>
+        <item>Music</item>
+        <item>Documents</item>
+        <item>Download</item>
+        <item>sdisk</item>
+    </string-array> 
+        
+    
+    <string name="interval_prompt">Download interval</string>    
+    <string-array name="interval_array">
+        <item>10 sec</item>
+        <item>30 sec</item>
+        <item> 1 min</item>
+        <item> 5 min</item>
+        <item>10 min</item>
+        <item>30 min</item>
+        <item> 1 hour</item>
+    </string-array>     
+    
+    
+	<string-array name="heart_attacks_and_shock">
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+		<item>4</item>
+	</string-array>    
+    
+    
+</resources>
