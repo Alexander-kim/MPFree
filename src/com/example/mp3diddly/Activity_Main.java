@@ -92,7 +92,7 @@ public class Activity_Main extends Activity
 	    		lStatus.showWindow(); 			        		        	
 	            return true;
 	        case R.id.action_settings:
-	    		Popup_Settings lSettings = new Popup_Settings(getBaseContext(), findViewById(R.id.action_settings));
+	    		Popup_Settings lSettings = new Popup_Settings(this);
 	    		lSettings.showWindow();     	
 	            return true;
 	        default:

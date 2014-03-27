@@ -3,6 +3,7 @@ package com.example.mp3diddly;
 import com.example.mp3diddly.datastorage.DataStorage;
 import com.example.mp3diddly.R;
 
+import android.app.Activity;
 import android.content.Context;
 import android.provider.Settings.Secure;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 
@@ -24,20 +26,20 @@ public class Popup_Settings
 	private PopupWindow popupWindow;	        	
 	private View popupView;
 	private DataStorage mStorage;
-	private Context mContext;
-	private View mParentView;
+	private Activity mParentActivity;
 	private String mDeviceId;
+	
+	
 	
 	/*
 	 * 
 	 * 
 	 */
-	public Popup_Settings(Context pContext, View pParentView)
+	public Popup_Settings(Activity pParentActivity)
 	{	
-		mContext = pContext;
-		mParentView = pParentView;
-		mStorage = DataStorage.getInstance(mContext);
-		mDeviceId = Secure.getString(mContext.getContentResolver(), Secure.ANDROID_ID);
+		mParentActivity = pParentActivity;
+		mStorage = DataStorage.getInstance(mParentActivity);
+		mDeviceId = Secure.getString(mParentActivity.getContentResolver(), Secure.ANDROID_ID);
 	}
 	
 	
@@ -49,8 +51,8 @@ public class Popup_Settings
 	public void showWindow()
 	{
     	try
-    	{       
-    		LayoutInflater layoutInflater = (LayoutInflater) mContext.getSystemService(android.content.Context.LAYOUT_INFLATER_SERVICE);  
+    	{ 
+    		LayoutInflater layoutInflater = (LayoutInflater) mParentActivity.getSystemService(android.content.Context.LAYOUT_INFLATER_SERVICE);  
     		popupView = layoutInflater.inflate(R.layout.activity_settings, null);  
     		popupWindow = new PopupWindow(popupView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);  
 		    
@@ -94,7 +96,8 @@ public class Popup_Settings
 						}
 						catch (Exception lEx)
 						{
-//							Toast.makeText(getApplicationContext(), "Error: " + lEx.getMessage(), Toast.LENGTH_LONG).show();
+							Toast.makeText(mParentActivity, "Exception(0): " + lEx.getMessage(), Toast.LENGTH_LONG).show();
+				    		Log.v("MP3Diddly", "Exception(0): " + lEx.getMessage());   
 						}
 						
 						// 2. Save config params
@@ -108,7 +111,7 @@ public class Popup_Settings
 			});	
 
 			/*
-			 * Load values    		
+			 * Load values
 			 */
 			
 			// 1. Read all config params
@@ -126,15 +129,15 @@ public class Popup_Settings
 			/*
 			 * Show popup window
 			 */
-			View lAnchor = mParentView.findViewById(R.id.action_settings);
-			
+			View lAnchor = ((Activity) mParentActivity).findViewById(R.id.action_status);
 			popupWindow.showAsDropDown(lAnchor, 50, 50);		                     	
 			popupWindow.setFocusable(true);
 			popupWindow.update();			
     	}
     	catch (Exception lEx)
     	{
-    		Log.v("MP3Thing", "Error status activity: " + lEx.getMessage());        		
+    		Toast.makeText(mParentActivity, "Exception(1): " + lEx.getMessage(), Toast.LENGTH_LONG).show();
+    		Log.v("MP3Diddly", "Exception(1): " + lEx.getMessage());        		
     	}		
 	}
 	

@@ -65,7 +65,6 @@ public class Popup_Status
 	 */
 	public void showWindow()
 	{
-		
     	try
     	{    		
     		LayoutInflater layoutInflater = (LayoutInflater) mParentActivity.getSystemService(android.content.Context.LAYOUT_INFLATER_SERVICE);  
@@ -102,8 +101,8 @@ public class Popup_Status
 			View lAnchor = ((Activity) mParentActivity).findViewById(R.id.action_status);
 			
 			mPopupWindow.showAsDropDown(lAnchor, 50, 50);		                     	
-//			mPopupWindow.setFocusable(true);
-//			mPopupWindow.update();			
+			mPopupWindow.setFocusable(true);
+			mPopupWindow.update();			
 	
 			getStatus();
     	}
