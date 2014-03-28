@@ -41,7 +41,7 @@ public class Popup_Status
 	private Context mParentActivity;
 	private String mDeviceId;
 	private List<Map> mListData = new ArrayList<Map>();
-	private ListView mListView;
+	private ListView mLV_Status;
 	private SimpleAdapter mDataAdapter;
 	private final String URL_STATUS = "/hans/Status.php";
 
@@ -70,12 +70,11 @@ public class Popup_Status
     		LayoutInflater layoutInflater = (LayoutInflater) mParentActivity.getSystemService(android.content.Context.LAYOUT_INFLATER_SERVICE);  
     		mPopupView = layoutInflater.inflate(R.layout.activity_status, null);  
     		mPopupWindow = new PopupWindow(mPopupView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);          		
-    		mListView = (ListView) mPopupView.findViewById(R.id.list3);
-
     		
-    		mDataAdapter = new SimpleAdapter(mParentActivity, (List<? extends Map<String, ?>>) mListData, R.layout.item, new String[] { "userIcon", "TV_Song_Descr", "TV_Song_Status" },
+    		mLV_Status = (ListView) mPopupView.findViewById(R.id.LV_Download_Status);    		
+    		mDataAdapter = new SimpleAdapter(mParentActivity, (List<? extends Map<String, ?>>) mListData, R.layout.item_status, new String[] { "userIcon", "TV_Song_Descr", "TV_Song_Status" },
     		   										  new int[] { R.id.userIcon, R.id.TV_Song_Descr, R.id.TV_Song_Status });
-    		mListView.setAdapter(mDataAdapter);
+    		mLV_Status.setAdapter(mDataAdapter);
 
     		
 
@@ -101,28 +100,14 @@ public class Popup_Status
 			View lAnchor = ((Activity) mParentActivity).findViewById(R.id.action_status);
 			
 			mPopupWindow.showAsDropDown(lAnchor, 50, 50);		                     	
-			mPopupWindow.setFocusable(true);
-			mPopupWindow.update();			
+//			mPopupWindow.setFocusable(true);
+//			mPopupWindow.update();			
 	
-			getStatus();
-    	}
-    	catch (Exception lEx)
-    	{
-
-    		Toast.makeText(mParentActivity, "Exception Status.showWindow(): " + lEx.getMessage(), Toast.LENGTH_LONG).show();
-    		Log.v("MP3Thing", "Error status activity: " + lEx.getMessage());        		
-    	}		
-	}	
-	
-	
-	
-	/*
-	 * 
-	 * 
-	 */
-	private void getStatus()
-	{
-		new Thread(){ public void run()
+			
+			/*
+			 * Start status thraed
+			 */
+			new Thread(){ public void run()
 			{			
 				Message lMsg = new Message();
 				
@@ -138,8 +123,17 @@ public class Popup_Status
 				}
 				
 				mStatusHandler.sendMessage(lMsg);
-			}}.start();		
-	}
+			}}.start();	
+    	}
+    	catch (Exception lEx)
+    	{
+
+    		Toast.makeText(mParentActivity, "Exception Status.showWindow(): " + lEx.getMessage(), Toast.LENGTH_LONG).show();
+    		Log.v("MP3Thing", "Error status activity: " + lEx.getMessage());        		
+    	}		
+	}	
+	
+
 
 
 	/*
