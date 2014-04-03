@@ -9,7 +9,7 @@
     <string name="string_settings">Settings</string>
     <string name="string_search">Search</string>    
     <string name="string_status">Stat</string>
-
+    <string name="service_name">Transcoding status</string>
     <string name="location_prompt">Storage location</string>
     <string-array name="locations_array">
         <item>Media</item>

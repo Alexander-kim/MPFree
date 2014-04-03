@@ -39,11 +39,9 @@ public class Popup_Status
 	private View mPopupView;
 	private DataStorage mStorage;
 	private Context mParentActivity;
-	private String mDeviceId;
 	private List<Map> mListData = new ArrayList<Map>();
 	private ListView mLV_Status;
 	private SimpleAdapter mDataAdapter;
-	private final String URL_STATUS = "/hans/Status.php";
 
 	/*
 	 * getBaseContext
@@ -53,7 +51,6 @@ public class Popup_Status
 	{
 		mParentActivity = pParentActivity;
 		mStorage = DataStorage.getInstance(mParentActivity);
-		mDeviceId = Secure.getString(mParentActivity.getContentResolver(), Secure.ANDROID_ID); 				
 	}
 
 	
@@ -114,7 +111,7 @@ public class Popup_Status
 				try
 				{
 					String lServer = mStorage.getStringElement("server");			
-					String lOuter = new HTTP_Server(mPopupView.getContext()).sendGETRequest(lServer, URL_STATUS + "?uid=" + mDeviceId);
+					String lOuter = new HTTP_Server(mPopupView.getContext()).sendGETRequest(lServer, Config.URL_STATUS + "?uid=" + Config.DeviceID);
 					
 					lMsg.getData().putString("status", lOuter);
 				}

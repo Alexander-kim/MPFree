@@ -58,7 +58,7 @@ public class HTTP_Server
 			} 
 			catch (Exception lEx) 
 			{
-				lRetVal = "Error:" + lEx.getMessage();
+				lRetVal = "Error(0):" + lEx.getMessage();
 			}
 		}
 		

@@ -19,7 +19,12 @@ import com.example.mp3diddly.http.HTTP_Server;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
+import android.provider.Settings.Secure;
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,7 +47,7 @@ public class Activity_Main extends Activity
 	private SimpleAdapter mDataAdapter;
 	private DataStorage mStorage;
 	private List<Map> mListData = new ArrayList<Map>();
-	private final String URL_SEARCH = "/hans/YTSearch.php";
+	
 
 	
 	@Override
@@ -51,6 +56,9 @@ public class Activity_Main extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+		
+		
+		Config.DeviceID = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
 		
 		mET_SearchTerm = (EditText) findViewById(R.id.ET_Search_Term);
 		mLV_Search = (ListView) findViewById(R.id.LV_Search_Output);		
@@ -67,7 +75,6 @@ public class Activity_Main extends Activity
 		        @Override
 		        public void onItemClick(AdapterView<?> a, View v, int i,long l) 
 		        {
-//		          Toast.makeText(getBaseContext(), "selected: i: " + i + " - l: " + l + " - " + mLV_Search.getItemAtPosition(i).toString(), Toast.LENGTH_LONG).show();	
 		        	Popup_Song lSong = new Popup_Song(Activity_Main.this);
 		        	lSong.showWindow();
 		        }
@@ -98,7 +105,7 @@ public class Activity_Main extends Activity
 	    				
 	    				try
 	    				{
-		    				lPath = URL_SEARCH + "?srch="+URLEncoder.encode(mET_SearchTerm.getText().toString());	    			
+		    				lPath = Config.URL_SEARCH + "?srch="+URLEncoder.encode(mET_SearchTerm.getText().toString());	    			
 		    				lHTTPClient  = new HTTP_Server(getBaseContext());
 		    				lSearchResult = lHTTPClient.sendGETRequest(mStorage.getStringElement("server"), lPath);	    					
 	    					lMsg.getData().putString("searchresult", lSearchResult);
@@ -111,7 +118,20 @@ public class Activity_Main extends Activity
 	    			}}.start();		            	
 	            }
 	        });	
-	 
+	     
+	     
+	     /*
+	      * Start service
+	      */
+		DataStorage lStorage = DataStorage.getInstance(this);
+		int lInterval = lStorage.getIntElement("interval");	     
+	     
+	     
+	    Intent notif = new Intent(this, Alarm_CheckStatus.class);
+		PendingIntent pi = PendingIntent.getBroadcast(this, 0, notif, PendingIntent.FLAG_CANCEL_CURRENT);
+
+		AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+		am.setRepeating(AlarmManager.RTC_WAKEUP, 1000, lInterval * 1000, pi);	        
 	}
 
 
@@ -199,7 +219,10 @@ public class Activity_Main extends Activity
 	
 	
 	
-	
+	/*
+	 * 
+	 * 
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) 
 	{		
@@ -232,28 +255,5 @@ public class Activity_Main extends Activity
 	            return super.onOptionsItemSelected(item);
 	    }
 	}	
-	
-private final String mOUTPUT = "{" +
-"  \"records\": " +
-"  [" +
-"    {" +
-"      \"ytid\":  \"pco91kroVgQ\", " +
-"      \"href\":  \"https://www.youtube.com/watch?v=pco91kroVgQ\",  " +
-"      \"title\": \"Lady Gaga - Applause (Official)\" " +
-"    }, " +
-"    { " +
-"      \"ytid\":  \"bESGLojNYSo\",  " +
-"      \"href\":  \"https://www.youtube.com/watch?v=bESGLojNYSo\",  " +
-"      \"title\": \"Lady Gaga - Poker Face\" " +
-"    }, " +
-"    { " +
-"      \"ytid\":  \"wV1FrqwZyKw\",  " +
-"      \"href\":  \"https://www.youtube.com/watch?v=wV1FrqwZyKw\",  " +
-"      \"title\": \"Lady Gaga - Born This Way\" " +
-"    } " +
-"  ] " +
-"}";
- 
-
 	
 }

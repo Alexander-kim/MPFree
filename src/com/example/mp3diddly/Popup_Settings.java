@@ -27,7 +27,6 @@ public class Popup_Settings
 	private View popupView;
 	private DataStorage mStorage;
 	private Activity mParentActivity;
-	private String mDeviceId;
 	
 	
 	
@@ -38,8 +37,7 @@ public class Popup_Settings
 	public Popup_Settings(Activity pParentActivity)
 	{	
 		mParentActivity = pParentActivity;
-		mStorage = DataStorage.getInstance(mParentActivity);
-		mDeviceId = Secure.getString(mParentActivity.getContentResolver(), Secure.ANDROID_ID);
+		mStorage = DataStorage.getInstance(mParentActivity);		
 	}
 	
 	
@@ -123,7 +121,7 @@ public class Popup_Settings
 			lServer.setText(mStorage.getStringElement("server"));		
 			lInterval.setSelection(mStorage.getIntElement("interval"));	
 			lLocation.setSelection(mStorage.getIntElement("location"));
-			lDeviceID.setText(mDeviceId);
+			lDeviceID.setText(Config.DeviceID);
 
 			
 			/*
