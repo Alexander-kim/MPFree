@@ -46,9 +46,20 @@ public class Broadcast_CheckStatus extends BroadcastReceiver
 	{
 
 		@Override
-		protected Void doInBackground(Context... params) 
-		{
-			Context lContext =  params[0];
+		protected Void doInBackground(Context... lParams) 
+		{			
+			Log.v("mp3diddly", "checking for new downloads ...");			
+			String lStatusData = "";
+			String lServer = "";
+			String lURI = "";
+			int lLocationIndex = -1;
+			String lOutputDir = "";
+			JSONObject lJSONObj = null;
+			HTTP_Server lHTTP = null;
+			
+			
+			Context lContext =  lParams[0];
+			
 			try
 			{
 				if (mStorage == null)
@@ -57,68 +68,84 @@ public class Broadcast_CheckStatus extends BroadcastReceiver
 				if (mDeviceId == null)
 					mDeviceId = Secure.getString(lContext.getContentResolver(), Secure.ANDROID_ID);
 				
-				String lURI = URL_STATUS + "?uid=" + Config.DeviceID;
-				String lServer =  mStorage.getStringElement("server");			
-				String lStatusData = new HTTP_Server(lContext).sendGETRequest(lServer, lURI);
 
-							
-				
-				if (lStatusData != null && !lStatusData.isEmpty())
-				{
-					JSONArray lJSONRecords = null;
-					List<Map> list = new ArrayList<Map>();
-
-					try 
-					{
-						JSONObject lJSONObj = new JSONObject(lStatusData);
-						
-						if (lJSONObj.has("records"))
-						{							
-							lJSONRecords = lJSONObj.getJSONArray("records");
-							HTTP_Server lHTTP = new HTTP_Server(lContext);
-							
-							for (int i = 0; i < lJSONRecords.length(); i++) 
-							{							
-								try
-								{
-								    JSONObject lItem = lJSONRecords.getJSONObject(i);
-								    if (lItem != null && lItem.has("ytid") && lItem.has("stat"))
-								    {								    	
-								    	String lYTID = lItem.optString("ytid");
-								    	String lStat = lItem.optString("stat");	
-								    	String lDesc = lItem.optString("desc");	
-								    	
-								    	if (lYTID != null && !lYTID.isEmpty() && lStat != null && !lStat.isEmpty())
-								    	{
-											Log.v("mp3diddly", "Downloading: " + lYTID + " / " + lStat);
-											String lFileName = lYTID+".mp3";
-											String lDownloadString = "http://" + lServer + Config.URL_DOWNLOAD + "?uid=" + Config.DeviceID + "&vid=" + lYTID;
-											
-											if (lHTTP.downloadFile(lDownloadString, "/sdcard/media/", lFileName))
-											{
-												Intent intent = new Intent();
-												intent.setAction("com.tutorialspoint.NEW_FILE");
-												intent.putExtra(Config.TITLE_FILENAME, lFileName);
-												intent.putExtra(Config.TITLE_DESCRIPTION, lDesc);
-												lContext.sendBroadcast(intent);
-											} // if (lHTTP...
-								    	} // if (lYTI...
-								    } // if (lItem...
-								}
-								catch (Exception lEx)
-								{									
-								}
-							} // for (int i ...
-						} // if (lJSONOb...
-					}
-					catch (Exception lEx)
-					{						
-					}
-				} // if (lOuter ...
+				lLocationIndex =  mStorage.getIntElement(Config.TITLE_LOCATION);	
+				lOutputDir = Config.LOCATION[lLocationIndex];
+				lURI = URL_STATUS + "?uid=" + Config.DeviceID;
+				lServer =  mStorage.getStringElement(Config.TITLE_SERVER);			
+				lStatusData = new HTTP_Server(lContext).sendGETRequest(lServer, lURI);
 			}
 			catch (Exception lEx)
+			{}
+				
+			
+			if (lStatusData != null && !lStatusData.isEmpty())
 			{
-			}				
+				JSONArray lJSONRecords = null;
+				List<Map> list = new ArrayList<Map>();
+										
+
+				try 
+				{
+					lJSONObj = new JSONObject(lStatusData);
+				}
+				catch (Exception lEx)
+				{}
+				
+				
+				if (lJSONObj != null && lJSONObj.has("records"))
+				{		
+					try
+					{
+						lJSONRecords = lJSONObj.getJSONArray("records");
+					}
+					catch (Exception lEx) {}
+					
+					lHTTP = new HTTP_Server(lContext);
+						
+					if (lJSONRecords != null && lJSONRecords.length() > 0)
+					{
+						for (int i = 0; i < lJSONRecords.length(); i++) 
+						{							
+							try
+							{
+							    JSONObject lItem = lJSONRecords.getJSONObject(i);
+							    if (lItem != null && lItem.has("ytid") && lItem.has("stat"))
+							    {								    	
+							    	String lYTID = lItem.optString("ytid");
+							    	String lStat = lItem.optString("stat");	
+							    	String lDesc = lItem.optString("desc");	
+									    	
+							    	if (lYTID != null && !lYTID.isEmpty() && lStat != null && !lStat.isEmpty())
+							    	{
+										Log.v("mp3diddly", "Downloading: " + lYTID + " / " + lStat);
+										String lDownloadString = "http://" + lServer + Config.URL_DOWNLOAD + "?uid=" + Config.DeviceID + "&vid=" + lYTID;
+												
+												
+										// Build file name
+										String lFileName = lDesc.replaceAll("[^\\w\\d\\.\\-_]", "_");
+										lFileName += ".mp3";
+												
+										if (lHTTP.downloadFile(lDownloadString, lOutputDir /* "/sdcard/media/" */, lFileName))
+										{
+											Intent intent = new Intent();
+											intent.setAction("com.tutorialspoint.NEW_FILE");
+											intent.putExtra(Config.TITLE_FILENAME, lFileName);
+											intent.putExtra(Config.TITLE_DESCRIPTION, lDesc);
+											intent.putExtra(Config.TITLE_ID, lYTID);
+											lContext.sendBroadcast(intent);
+										} // if (lHTTP...
+							    	} // if (lYTI...
+							    } // if (lItem...
+							}
+							catch (Exception lEx)
+							{									
+							}
+						} // for (int i ...
+					} // if (lJSONR...
+				} // if (lJSONOb...
+			} // if (lOuter ...
+				
 			
 			return null;
 		}

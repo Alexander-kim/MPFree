@@ -1,5 +1,6 @@
 package com.example.mp3diddly;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +11,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings.Secure;
@@ -17,6 +20,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -37,10 +42,12 @@ public class Popup_Song
 	private String mDeviceId;
 	private String mSongDescr;
 	private String mYTID;
+	private WebView mYoutubeWebView;
+	private TextView mVideoTitle;
 	
-
+	
 	/*
-	 * getBaseContext
+	 * 
 	 * 
 	 */
 	public Popup_Song(Activity pParentActivity, String pSongDescr, String pYTID)
@@ -73,6 +80,19 @@ public class Popup_Song
 					@Override
 					public void onClick(View v) 
 					{
+						try
+						{
+							mYoutubeWebView.stopLoading();
+						} catch (Exception lEx) {}
+						
+						try {
+							Class.forName("android.webkit.WebView")
+							.getMethod("onPause", (Class[]) null)
+							            .invoke(mYoutubeWebView, (Object[]) null);
+						} catch (Exception e) {
+						}						
+						
+						
 						mPopupWindow.dismiss();
 			     	}
 			});
@@ -95,7 +115,7 @@ public class Popup_Song
 							
 							try
 							{
-								String lServer = mStorage.getStringElement("server");			
+								String lServer = mStorage.getStringElement(Config.TITLE_SERVER);			
 								String lURL = Config.URL_TRANSCODE + "?uid=" + Config.DeviceID + "&vid="+ mYTID;
 								String lOuter = new HTTP_Server(mPopupView.getContext()).sendGETRequest(lServer, lURL);
 
@@ -112,10 +132,30 @@ public class Popup_Song
 			});	   
 			
 			
+			
 			/*
-			 * Load values
+			 * Video title
 			 */
+			mVideoTitle = (TextView) mPopupView.findViewById(R.id.TV_Song_TitleValue);
+			mVideoTitle.setText(mSongDescr);
 
+			
+			/*
+			 * Web view
+			 */
+			mYoutubeWebView = (WebView) mPopupView.findViewById(R.id.WV_Video);
+			String playVideo= "<html><body><iframe class=\"youtube-player\" type=\"text/html\" width=\"320\" height=\"240\" src=\"http://www.youtube.com/embed/" + mYTID + "\" frameborder=\"0\"></body></html>";
+			mYoutubeWebView.getSettings().setJavaScriptEnabled(true);
+//			mYoutubeWebView.getSettings().setPluginsEnabled(true);
+			mYoutubeWebView.setWebChromeClient(new WebChromeClient() {});
+			mYoutubeWebView.loadData(playVideo, "text/html", "UTF-8");
+			
+//			Intent i = new Intent(Intent.ACTION_VIEW);
+//			i.setData(Uri.parse("http://www.youtube.com/watch?v=DdlWPL53PvQ"));
+//			mPopupView.getContext().startActivity(i);	
+			
+			
+			
 			
 			/*
 			 * Show popup window

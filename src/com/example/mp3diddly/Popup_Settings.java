@@ -74,6 +74,8 @@ public class Popup_Settings
 			ImageButton lBT_Save = (ImageButton) popupView.findViewById(R.id.BT_Save);
 			lBT_Save.setOnClickListener(new Button.OnClickListener()
 			{
+			
+				
 					@Override
 					public void onClick(View v) 
 					{
@@ -91,6 +93,8 @@ public class Popup_Settings
 							lLocation = lS_Location.getSelectedItemPosition();
 							lInterval = lS_Interval.getSelectedItemPosition();
 							lServer = lET_Server.getText().toString();
+							if (lServer == null || lServer.isEmpty())
+								lServer = Config.DEFAULT_SERVER;
 						}
 						catch (Exception lEx)
 						{
@@ -99,9 +103,9 @@ public class Popup_Settings
 						}
 						
 						// 2. Save config params
-						mStorage.saveIntElement("location", lLocation);
-						mStorage.saveIntElement("interval", lInterval);
-						mStorage.saveStringElement("server", lServer);
+						mStorage.saveIntElement(Config.TITLE_LOCATION, lLocation);
+						mStorage.saveIntElement(Config.TITLE_INTERVAL, lInterval);
+						mStorage.saveStringElement(Config.TITLE_SERVER, lServer);
 												
 						// 3. Close window
 						popupWindow.dismiss();

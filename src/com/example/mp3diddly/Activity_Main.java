@@ -25,6 +25,7 @@ import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -76,7 +77,7 @@ public class Activity_Main extends Activity
 		        public void onItemClick(AdapterView<?> a, View v, int pIndex,long l) 
 		        {		        	
 		        	Map map = (HashMap) mLV_Search.getItemAtPosition(pIndex);
-		        	String lTitle =  "song title ..."; //map.get("TV_Song_ID").toString();
+		        	String lTitle =  map.get("TV_Song_Title").toString();
 		        	String lYTID = map.get("TV_Song_ID").toString();
 		        	
 					Popup_Song lSong = new Popup_Song(Activity_Main.this, lTitle, lYTID);
@@ -111,14 +112,17 @@ public class Activity_Main extends Activity
 	    				{
 		    				lPath = Config.URL_SEARCH + "?srch="+URLEncoder.encode(mET_SearchTerm.getText().toString());	    			
 		    				lHTTPClient  = new HTTP_Server(getBaseContext());
-		    				lSearchResult = lHTTPClient.sendGETRequest(mStorage.getStringElement("server"), lPath);	    					
+		    				lSearchResult = lHTTPClient.sendGETRequest(mStorage.getStringElement(Config.TITLE_SERVER), lPath);	    					
 	    					lMsg.getData().putString("searchresult", lSearchResult);
+	    					
+
+		    				mSearchOutputHandler.sendMessage(lMsg);
 	    				}
 	    				catch (Exception lEx)
 	    				{
+	    					Toast.makeText(getBaseContext(), "Error: " + lEx.getMessage(), Toast.LENGTH_LONG).show();
 	    				}
 	    				
-	    				mSearchOutputHandler.sendMessage(lMsg);
 	    			}}.start();		            	
 	            }
 	        });	
@@ -128,14 +132,24 @@ public class Activity_Main extends Activity
 	      * Start service
 	      */
 		DataStorage lStorage = DataStorage.getInstance(this);
-		int lInterval = lStorage.getIntElement("interval");	     
-	     
+		int lIntervalIndex = lStorage.getIntElement(Config.TITLE_INTERVAL);	     
+	    int lInterval = 1;
+	    
+	    try
+	    {
+	    	lInterval = Config.INTERVAL[lIntervalIndex];	    	
+	    }
+	    catch (Exception lEx)
+	    {	    	
+	    }
 	     
 	    Intent notif = new Intent(this, Broadcast_CheckStatus.class);
 		PendingIntent pi = PendingIntent.getBroadcast(this, 0, notif, PendingIntent.FLAG_CANCEL_CURRENT);
 
 		AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-		am.setRepeating(AlarmManager.RTC_WAKEUP, 1000, lInterval * 1000, pi);	        
+		am.setRepeating(AlarmManager.RTC_WAKEUP, 1000, lInterval * 1000, pi);	
+		
+		Log.v("mp3diddly", "Status check interval: " + lInterval);	
 	}
 
 
@@ -172,12 +186,11 @@ public class Activity_Main extends Activity
 						    if (lItem != null && lItem.has("ytid") && lItem.has("href") && lItem.has("title"))
 						    {						    	
 						    	String lYTID = lItem.optString("ytid");
-						    	String lHRef = lItem.optString("href");
+//						    	String lHRef = lItem.optString("href");
 						    	String lTitle = lItem.optString("title");
 						    	
 						    	Map map = new HashMap();
 						    	map.put("userIcon", R.drawable.note_small);
-//						    	map.put("TV_Song_YTID", lYTID);
 						    	map.put("TV_Song_Title", lTitle);
 						    	map.put("TV_Song_ID", lYTID);
 						    	

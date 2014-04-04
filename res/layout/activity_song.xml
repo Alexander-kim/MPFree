@@ -21,106 +21,50 @@
 			    android:layout_margin="1dp"	
 			    android:layout_marginBottom="100dp"	    			     
 			    >
-			
-			
+		
 			    <TextView
-			        android:id="@+id/TV_Location"
+			        android:id="@+id/TV_Song_Title"
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
-			        android:paddingTop="20dp"
-			        android:paddingLeft="10dp"
-			        android:text="Download location" 
-			        />    
-			
-			    <Spinner
-			        android:id="@+id/SpinnerLocation"
-			        android:spinnerMode="dialog"
-			        android:layout_width="150dp"
-			        android:layout_height="wrap_content"
-			        android:prompt="@string/location_prompt"
-			        android:entries="@array/locations_array"
-			        android:layout_toRightOf="@+id/TV_Location" 
 			        android:paddingTop="10dp"
-			        android:layout_marginLeft="1dp"
-			        />
-			 
-			        
-			    
-			    
-			    <TextView
-			        android:id="@+id/TV_Interval"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:paddingTop="20dp"
 			        android:paddingLeft="10dp"
-			        android:layout_below="@+id/TV_Location"
-			        android:text="Download interval" 
-			        />
-			
-			    <Spinner
-			        android:id="@+id/SpinnerInterval"
-			        android:spinnerMode="dialog"
-			        android:layout_width="150dp"
-			        android:layout_height="wrap_content"
-			        android:prompt="@string/interval_prompt"
-			        android:entries="@array/interval_array"
-			        android:layout_toRightOf="@+id/TV_Interval"
-			        android:layout_below="@+id/SpinnerLocation"
-			        android:layout_marginLeft="1dp"
-			        />
-			        
-			    
-			    
-			    
-			    <TextView
-			        android:id="@+id/TV_Server"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:layout_below="@+id/TV_Interval"
-			        android:paddingTop="20dp"
-			        android:paddingLeft="10dp"   
-			        android:text="MP3 server" />
-			
-			     <EditText
-			        android:id="@+id/ET_Server"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:layout_toRightOf="@+id/TV_Interval"
-			        android:layout_below="@+id/SpinnerInterval"
-			        android:layout_marginLeft="1dp"
-			        android:width="150dp"
-			        android:text="192.168.0.100"
-			      />
-			  
-			     
-			     
-			    
-			    <TextView
-			        android:id="@+id/TV_DeviceID"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:layout_below="@+id/ET_Server"
-			        android:paddingTop="20dp"
-			        android:paddingLeft="10dp"   
-			        android:text="Devicd ID" />
+			        android:paddingBottom="10dp"
+			        android:textStyle="bold"
+			        android:text="Video title " />
 			    			     
 			    <TextView
-			        android:id="@+id/TV_DeviceIDValue"
-			        android:layout_width="wrap_content"
+			        android:id="@+id/TV_Song_TitleValue"
+			        android:layout_width="fill_parent"
 			        android:layout_height="wrap_content"
-			        android:layout_toRightOf="@+id/TV_Interval"
-			        android:layout_below="@+id/ET_Server"
-			        android:paddingTop="20dp"
+			        android:layout_toRightOf="@+id/TV_Song_Title"
+			        android:paddingTop="10dp"
 			        android:paddingLeft="10dp"   
-			        android:text="..." />			    
+			        android:text="..." />
+			  
+			</RelativeLayout>
+			    
+			    
+			<RelativeLayout
+			    android:background="#D8D8D8"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"	 
+			    android:layout_margin="1dp"	
+			    android:layout_marginBottom="100dp"	    			     
+			    >			    			
+				<WebView
+				    android:id="@+id/WV_Video"
+				    android:background="@android:color/white"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content" />			
+
+			    
 			    			     
 			     
 			    <ImageButton
 			        android:id="@+id/BT_Song_Download"
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
-			        android:layout_below="@+id/TV_DeviceIDValue"
-					android:layout_alignRight="@+id/TV_DeviceIDValue"
+			        android:layout_below="@+id/WV_Video"
 					android:layout_marginTop="20dp"
 					android:layout_marginRight="20dp"
 					android:layout_marginBottom="20dp"
@@ -131,8 +75,8 @@
 			        android:id="@+id/BT_Song_Cancel"
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
-			        android:layout_below="@+id/TV_DeviceIDValue"
-					android:layout_toLeftOf="@+id/BT_Save"
+			        android:layout_below="@+id/WV_Video"
+					android:layout_toRightOf="@+id/BT_Song_Download"
 					android:layout_marginTop="20dp"
 					android:layout_marginBottom="20dp"
 					android:layout_marginRight="20dp"
