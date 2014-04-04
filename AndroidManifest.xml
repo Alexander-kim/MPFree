@@ -4,10 +4,11 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
-    <uses-sdk android:minSdkVersion="11" android:targetSdkVersion="18" />
+    <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="18" />
     
     <uses-permission android:name="android.permission.INTERNET" />     
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
         
     <application
         android:allowBackup="true"
@@ -29,14 +30,22 @@
         <activity android:name="ListMobileActivity" />
         
         
-		<receiver android:name="com.example.mp3diddly.Alarm_CheckStatus">
+		<receiver android:name="com.example.mp3diddly.Broadcast_CheckStatus">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />  
                 <action android:name="android.net.conn.INTERNET" />
                 <action android:name="android.net.conn.ACCESS_NETWORK_STATE" />
             </intent-filter>		    
 	    </receiver>        
-                
+        
+        
+		<receiver android:name="com.example.mp3diddly.Broadcast_NewFiles">
+            <intent-filter>
+                <action android:name="com.tutorialspoint.NEW_FILE" />
+            </intent-filter>		    
+	    </receiver>  
+	    
+		
         
     </application>
 

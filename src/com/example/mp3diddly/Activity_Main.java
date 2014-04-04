@@ -62,8 +62,8 @@ public class Activity_Main extends Activity
 		
 		mET_SearchTerm = (EditText) findViewById(R.id.ET_Search_Term);
 		mLV_Search = (ListView) findViewById(R.id.LV_Search_Output);		
-		mDataAdapter = new SimpleAdapter(this, (List<? extends Map<String, ?>>) mListData, R.layout.item_search, new String[] { "userIcon", "TV_Song_Title" },
-		   										  new int[] { R.id.userIcon, R.id.TV_Song_Title });
+		mDataAdapter = new SimpleAdapter(this, (List<? extends Map<String, ?>>) mListData, R.layout.item_search, new String[] { "userIcon", "TV_Song_Title", "TV_Song_ID" },
+		   										  new int[] { R.id.userIcon, R.id.TV_Song_Title, R.id.TV_Song_ID });
 		mLV_Search.setAdapter(mDataAdapter);		
 
 		mStorage = DataStorage.getInstance(this);
@@ -73,9 +73,13 @@ public class Activity_Main extends Activity
 		mLV_Search.setOnItemClickListener(new OnItemClickListener()
 		    {
 		        @Override
-		        public void onItemClick(AdapterView<?> a, View v, int i,long l) 
-		        {
-		        	Popup_Song lSong = new Popup_Song(Activity_Main.this);
+		        public void onItemClick(AdapterView<?> a, View v, int pIndex,long l) 
+		        {		        	
+		        	Map map = (HashMap) mLV_Search.getItemAtPosition(pIndex);
+		        	String lTitle =  "song title ..."; //map.get("TV_Song_ID").toString();
+		        	String lYTID = map.get("TV_Song_ID").toString();
+		        	
+					Popup_Song lSong = new Popup_Song(Activity_Main.this, lTitle, lYTID);
 		        	lSong.showWindow();
 		        }
             });
@@ -127,7 +131,7 @@ public class Activity_Main extends Activity
 		int lInterval = lStorage.getIntElement("interval");	     
 	     
 	     
-	    Intent notif = new Intent(this, Alarm_CheckStatus.class);
+	    Intent notif = new Intent(this, Broadcast_CheckStatus.class);
 		PendingIntent pi = PendingIntent.getBroadcast(this, 0, notif, PendingIntent.FLAG_CANCEL_CURRENT);
 
 		AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
@@ -147,8 +151,7 @@ public class Activity_Main extends Activity
 			String lNewData = msg.getData().getString("searchresult");
 			JSONArray lJSONRecords = null;
 			List<Map> list = new ArrayList<Map>();
-			
-			
+						
 			
 			try 
 			{
@@ -176,6 +179,7 @@ public class Activity_Main extends Activity
 						    	map.put("userIcon", R.drawable.note_small);
 //						    	map.put("TV_Song_YTID", lYTID);
 						    	map.put("TV_Song_Title", lTitle);
+						    	map.put("TV_Song_ID", lYTID);
 						    	
 						    	list.add(map);
 

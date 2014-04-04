@@ -116,7 +116,7 @@
 			    			     
 			     
 			    <ImageButton
-			        android:id="@+id/BT_Save"
+			        android:id="@+id/BT_Song_Download"
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:layout_below="@+id/TV_DeviceIDValue"
@@ -124,11 +124,11 @@
 					android:layout_marginTop="20dp"
 					android:layout_marginRight="20dp"
 					android:layout_marginBottom="20dp"
-			        android:src="@drawable/accept"
+			        android:src="@drawable/download"
 			     />
 			     
 			    <ImageButton
-			        android:id="@+id/BT_Cancel"
+			        android:id="@+id/BT_Song_Cancel"
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:layout_below="@+id/TV_DeviceIDValue"

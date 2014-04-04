@@ -30,6 +30,15 @@
 			 android:layout_alignParentLeft="true"
 			 android:textColor="#FFF38585"
 			 android:textSize="15sp" />
+
+			<TextView
+			 android:id="@+id/TV_Song_ID"
+			 android:layout_width="wrap_content"
+			 android:layout_height="wrap_content"
+			 android:layout_alignParentLeft="true"
+			 android:textColor="#FFF38585"
+			 android:textSize="15sp" />			
+						
 		 </RelativeLayout>
 	 
 		<ImageView

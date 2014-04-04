@@ -73,8 +73,6 @@ public class Popup_Status
     		   										  new int[] { R.id.userIcon, R.id.TV_Song_Descr, R.id.TV_Song_Status });
     		mLV_Status.setAdapter(mDataAdapter);
 
-    		
-
 
     		
     		/*
