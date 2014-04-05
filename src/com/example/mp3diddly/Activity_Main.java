@@ -19,7 +19,6 @@ import com.example.mp3diddly.http.HTTP_Server;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.SystemClock;
 import android.provider.Settings.Secure;
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -48,9 +47,26 @@ public class Activity_Main extends Activity
 	private SimpleAdapter mDataAdapter;
 	private DataStorage mStorage;
 	private List<Map> mListData = new ArrayList<Map>();
-	
 
 	
+	@Override
+	public void onPause() 
+	{
+	    super.onPause();  // Always call the superclass method first
+	}
+
+	@Override
+	public void onResume() 
+	{
+	    super.onResume();  // Always call the superclass method first
+	}	
+	
+	
+	
+	/*
+	 * 	
+	 * 
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{

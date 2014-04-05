@@ -118,28 +118,34 @@ public class Broadcast_CheckStatus extends BroadcastReceiver
 									    	
 							    	if (lYTID != null && !lYTID.isEmpty() && lStat != null && !lStat.isEmpty())
 							    	{
-										Log.v("mp3diddly", "Downloading: " + lYTID + " / " + lStat);
 										String lDownloadString = "http://" + lServer + Config.URL_DOWNLOAD + "?uid=" + Config.DeviceID + "&vid=" + lYTID;
+										Log.v("mp3diddly", "Requests status: " + lStat + "/" + Config.TRANSCODING_STATUS.get(lStat));
 												
-												
-										// Build file name
-										String lFileName = lDesc.replaceAll("[^\\w\\d\\.\\-_]", "_");
-										lFileName += ".mp3";
-												
-										if (lHTTP.downloadFile(lDownloadString, lOutputDir /* "/sdcard/media/" */, lFileName))
+										// File is ready to download
+										if (lStat.equals("2"))
 										{
-											Intent intent = new Intent();
-											intent.setAction("com.tutorialspoint.NEW_FILE");
-											intent.putExtra(Config.TITLE_FILENAME, lFileName);
-											intent.putExtra(Config.TITLE_DESCRIPTION, lDesc);
-											intent.putExtra(Config.TITLE_ID, lYTID);
-											lContext.sendBroadcast(intent);
-										} // if (lHTTP...
+											Log.v("mp3diddly", "Downloading: " + lYTID + " / " + lStat);
+											
+											// Build file name
+											String lFileName = lDesc.replaceAll("[^\\w\\d\\.\\-_]", "_");
+											lFileName += ".mp3";
+													
+											if (lHTTP.downloadFile(lDownloadString, lOutputDir /* "/sdcard/media/" */, lFileName))
+											{
+												Intent intent = new Intent();
+												intent.setAction("com.tutorialspoint.NEW_FILE");
+												intent.putExtra(Config.TITLE_FILENAME, lFileName);
+												intent.putExtra(Config.TITLE_DESCRIPTION, lDesc);
+												intent.putExtra(Config.TITLE_ID, lYTID);
+												lContext.sendBroadcast(intent);
+											} // if (lHTTP...
+										} // if (lSt...
 							    	} // if (lYTI...
 							    } // if (lItem...
 							}
 							catch (Exception lEx)
-							{									
+							{
+								Log.v("mp3diddly", "Exception: " + lEx.getMessage());
 							}
 						} // for (int i ...
 					} // if (lJSONR...

@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,7 +45,8 @@ public class Popup_Song
 	private String mYTID;
 	private WebView mYoutubeWebView;
 	private TextView mVideoTitle;
-	
+	private ImageButton mBT_Download;
+	private ImageButton mBT_Cancel;
 	
 	/*
 	 * 
@@ -74,8 +76,8 @@ public class Popup_Song
     		/*
     		 * Cancel button event handler
     		 */
-			ImageButton lBT_Cancel = (ImageButton) mPopupView.findViewById(R.id.BT_Song_Cancel);
-			lBT_Cancel.setOnClickListener(new Button.OnClickListener()
+			mBT_Cancel = (ImageButton) mPopupView.findViewById(R.id.BT_Song_Cancel);
+			mBT_Cancel.setOnClickListener(new Button.OnClickListener()
 			{
 					@Override
 					public void onClick(View v) 
@@ -85,11 +87,14 @@ public class Popup_Song
 							mYoutubeWebView.stopLoading();
 						} catch (Exception lEx) {}
 						
-						try {
+						try 
+						{
 							Class.forName("android.webkit.WebView")
 							.getMethod("onPause", (Class[]) null)
-							            .invoke(mYoutubeWebView, (Object[]) null);
-						} catch (Exception e) {
+							.invoke(mYoutubeWebView, (Object[]) null);
+						}
+						catch (Exception lEx) 
+						{
 						}						
 						
 						
@@ -100,12 +105,12 @@ public class Popup_Song
     		/*
     		 * Save button event handler
     		 */
-			ImageButton lBT_Download = (ImageButton) mPopupView.findViewById(R.id.BT_Song_Download);
-			lBT_Download.setOnClickListener(new Button.OnClickListener()
+			mBT_Download = (ImageButton) mPopupView.findViewById(R.id.BT_Song_Download);
+			mBT_Download.setOnClickListener(new Button.OnClickListener()
 			{
 					@Override
 					public void onClick(View v) 
-					{
+					{												
 						/*
 						 * Start status thraed
 						 */
@@ -119,8 +124,8 @@ public class Popup_Song
 								String lURL = Config.URL_TRANSCODE + "?uid=" + Config.DeviceID + "&vid="+ mYTID;
 								String lOuter = new HTTP_Server(mPopupView.getContext()).sendGETRequest(lServer, lURL);
 
-//								lMsg.getData().putString("status", lOuter);
 								lMsg.getData().putString("info", "Downloading song: " + mSongDescr);
+								;
 							}
 							catch (Exception lEx)
 							{
@@ -143,18 +148,18 @@ public class Popup_Song
 			/*
 			 * Web view
 			 */
+			String lServer = mStorage.getStringElement(Config.TITLE_SERVER);
+			String lURL = "http://" + lServer + Config.URL_WATCH + "?vid=" + mYTID;
 			mYoutubeWebView = (WebView) mPopupView.findViewById(R.id.WV_Video);
-			String playVideo= "<html><body><iframe class=\"youtube-player\" type=\"text/html\" width=\"320\" height=\"240\" src=\"http://www.youtube.com/embed/" + mYTID + "\" frameborder=\"0\"></body></html>";
 			mYoutubeWebView.getSettings().setJavaScriptEnabled(true);
-//			mYoutubeWebView.getSettings().setPluginsEnabled(true);
+			mYoutubeWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(false);
+			mYoutubeWebView.getSettings().setSupportMultipleWindows(false);
+	        mYoutubeWebView.getSettings().setSupportZoom(false);
+	        mYoutubeWebView.setVerticalScrollBarEnabled(false);
+	        mYoutubeWebView.setHorizontalScrollBarEnabled(false);			
+			
 			mYoutubeWebView.setWebChromeClient(new WebChromeClient() {});
-			mYoutubeWebView.loadData(playVideo, "text/html", "UTF-8");
-			
-//			Intent i = new Intent(Intent.ACTION_VIEW);
-//			i.setData(Uri.parse("http://www.youtube.com/watch?v=DdlWPL53PvQ"));
-//			mPopupView.getContext().startActivity(i);	
-			
-			
+			mYoutubeWebView.loadUrl(lURL);
 			
 			
 			/*
@@ -162,9 +167,8 @@ public class Popup_Song
 			 */
 			View lAnchor = ((Activity) mParentActivity).findViewById(R.id.action_status);
 			mPopupWindow.showAsDropDown(lAnchor, 50, 50);		                     	
-//			mPopupWindow.setFocusable(true);
-//			mPopupWindow.update();	    	    	        	    		
-//    		Toast.makeText(mParentActivity, "Popup_Song.ShowWindow(): ...", Toast.LENGTH_LONG).show();
+			mPopupWindow.setFocusable(true);
+			mPopupWindow.update();	    	    	        	    		
     	}
     	catch (Exception lEx)
     	{
@@ -181,8 +185,9 @@ public class Popup_Song
 	{
 		public void handleMessage(Message msg)
 		{
+			mBT_Download.setEnabled(false);
 			String lNewData = msg.getData().getString("info");
-			Toast.makeText(mParentActivity, "Msg: " + lNewData, Toast.LENGTH_LONG).show();			
+			Toast.makeText(mParentActivity, lNewData, Toast.LENGTH_LONG).show();			
 		}
 	};		
 	

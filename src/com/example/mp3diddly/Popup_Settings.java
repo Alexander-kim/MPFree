@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.provider.Settings.Secure;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -132,7 +133,10 @@ public class Popup_Settings
 			 * Show popup window
 			 */
 			View lAnchor = ((Activity) mParentActivity).findViewById(R.id.action_status);
-			popupWindow.showAsDropDown(lAnchor, 50, 50);		                     	
+//			popupWindow.showAsDropDown(lAnchor, 50, 50);		       
+			popupWindow.showAtLocation(lAnchor, Gravity.CENTER, 0, 0);			
+			
+			
 			popupWindow.setFocusable(true);
 			popupWindow.update();			
     	}

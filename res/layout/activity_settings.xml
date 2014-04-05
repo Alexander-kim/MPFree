@@ -15,7 +15,7 @@
 	     >
 	     
 			<RelativeLayout
-			    android:background="#D8D8D8"
+			    android:background="#F8F8F8"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"	 
 			    android:layout_margin="1dp"	

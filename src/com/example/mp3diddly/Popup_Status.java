@@ -43,8 +43,10 @@ public class Popup_Status
 	private ListView mLV_Status;
 	private SimpleAdapter mDataAdapter;
 
+	
+	
 	/*
-	 * getBaseContext
+	 * 
 	 * 
 	 */
 	public Popup_Status(Activity pParentActivity)
@@ -88,16 +90,6 @@ public class Popup_Status
 			     	}
 			});
               
-
-			/*
-			 * Show popup window
-			 */
-			View lAnchor = ((Activity) mParentActivity).findViewById(R.id.action_status);
-			
-			mPopupWindow.showAsDropDown(lAnchor, 50, 50);		                     	
-//			mPopupWindow.setFocusable(true);
-//			mPopupWindow.update();			
-	
 			
 			/*
 			 * Start status thraed
@@ -108,10 +100,10 @@ public class Popup_Status
 				
 				try
 				{
-					String lServer = mStorage.getStringElement("server");			
+					String lServer = mStorage.getStringElement(Config.TITLE_SERVER);			
 					String lOuter = new HTTP_Server(mPopupView.getContext()).sendGETRequest(lServer, Config.URL_STATUS + "?uid=" + Config.DeviceID);
 					
-					lMsg.getData().putString("status", lOuter);
+					lMsg.getData().putString(Config.TITLE_STATUS, lOuter);
 				}
 				catch (Exception lEx)
 				{
@@ -151,53 +143,77 @@ public class Popup_Status
 				{
 					lJSONRecords = lJSONObj.getJSONArray("records");
 					
-					for (int i = 0; i < lJSONRecords.length(); i++) 
+					if (lJSONRecords.length() > 0)
 					{
-						try
+						for (int i = 0; i < lJSONRecords.length(); i++) 
 						{
-						    JSONObject lItem = lJSONRecords.getJSONObject(i);
-						    
-						    if (lItem != null && lItem.has("desc"))
-						    {
-//						    	String lID = lItem.optString("ytid");
-//						    	int lStat = lItem.optInt("stat");
-						    	String lStatStr = lItem.optString("statstr");
-						    	String lDesc = lItem.optString("desc");
-						    	
-						    	Map map = new HashMap();
-						    	map.put("userIcon", R.drawable.note_small);
-						    	map.put("TV_Song_Status", lStatStr);
-						    	map.put("TV_Song_Descr", lDesc);						    	
-						    	list.add(map);
-						    } // if (lIte...
+							try
+							{
+							    JSONObject lItem = lJSONRecords.getJSONObject(i);
+							    
+							    if (lItem != null && lItem.has("desc") && lItem.has("stat"))
+							    {
+							    	String lStat = Config.TRANSCODING_STATUS.get(lItem.optString("stat"));
+							    	String lDesc = lItem.optString("desc");
+							    	
+							    	
+							    	Map map = new HashMap();
+							    	map.put("userIcon", R.drawable.note_small);
+							    	map.put("TV_Song_Status", lStat);
+							    	map.put("TV_Song_Descr", lDesc);						    	
+							    	list.add(map);
+							    } // if (lIte...
+							}
+							catch (Exception lEx)
+							{							
+								// error handling would be something ... !
+							}
+						} // for (int ...
+						
+						/*
+						 * Update GUI 
+						 */
+						if (list.size() > 0)
+						{
+							try
+							{
+								/*
+								 * Repopulate list view
+								 */
+					    		mListData.clear();		    		
+								mListData.addAll(list);
+								mDataAdapter.notifyDataSetChanged();	
+								
+								/*
+								 * Show popup window
+								 */
+								View lAnchor = ((Activity) mParentActivity).findViewById(R.id.action_status);			
+								mPopupWindow.showAsDropDown(lAnchor, 50, 50);	
+								mPopupWindow.setFocusable(true);
+								mPopupWindow.update();
+							}
+							catch (Exception lEx)
+							{						
+							}
 						}
-						catch (Exception lEx)
-						{							
-							// error handling would be something ... !
-						}
-					} // for (int ...									
-				} // if (lJSO...
-				
-																
-				/*
-				 * Update GUI 
-				 */
-				if (list.size() > 0)
-				{
-					try
+						else
+						{
+							Toast.makeText(mParentActivity, "No songs to download.", Toast.LENGTH_SHORT).show();	
+						} // if (list...
+					}
+					else
 					{
-			    		mListData.clear();		    		
-						mListData.addAll(list);
-						mDataAdapter.notifyDataSetChanged();	    		
-					}
-					catch (Exception lEx)
-					{						
-					}
+						Toast.makeText(mParentActivity, "No songs to download.", Toast.LENGTH_SHORT).show();						
+					} // if (lJSON...
 				}
+				else
+				{
+					Toast.makeText(mParentActivity, "No songs to download.", Toast.LENGTH_SHORT).show();					
+				} // if (lJSO...
 			}
 			catch (JSONException lEx) 
 			{
-				Toast.makeText(mParentActivity, "Status exception: " + lEx.getMessage(), Toast.LENGTH_SHORT).show();	
+				Toast.makeText(mParentActivity, "Status exception: " + lEx.getMessage(), Toast.LENGTH_SHORT).show();
 			}			
 		}
 	};	

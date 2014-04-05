@@ -18,7 +18,8 @@
         
         <activity
             android:name="com.example.mp3diddly.Activity_Main"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:screenOrientation="portrait">
             
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,9 +27,7 @@
             </intent-filter>
             
         </activity>
-                             
-        <activity android:name="ListMobileActivity" />
-        
+                                     
         
 		<receiver android:name="com.example.mp3diddly.Broadcast_CheckStatus">
             <intent-filter>

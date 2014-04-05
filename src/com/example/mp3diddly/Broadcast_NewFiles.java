@@ -11,7 +11,8 @@ import android.net.Uri;
 
 public class Broadcast_NewFiles extends BroadcastReceiver
 {
-
+	private static int mMessageCounter = 0;
+	
 	@Override
 	public void onReceive(Context context, Intent intent) 
 	{
@@ -27,7 +28,7 @@ public class Broadcast_NewFiles extends BroadcastReceiver
 		    
 		  
 		NotificationManager notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
-		notificationManager.notify(0, n); 
+		notificationManager.notify(mMessageCounter++, n); 
 		
 		
 		Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
