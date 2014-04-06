@@ -1,4 +1,4 @@
-package com.example.mp3diddly;
+package com.example.mpfree;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -31,8 +31,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mp3diddly.datastorage.DataStorage;
-import com.example.mp3diddly.http.HTTP_Server;
+import com.example.mp3diddly.R;
+import com.example.mpfree.datastorage.DataStorage;
+import com.example.mpfree.http.HTTP_Server;
 
 public class Popup_Song 
 {

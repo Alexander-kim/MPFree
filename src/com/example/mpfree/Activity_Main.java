@@ -1,4 +1,4 @@
-package com.example.mp3diddly;
+package com.example.mpfree;
 
 
 import java.net.URLEncoder;
@@ -12,8 +12,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.example.mp3diddly.R;
-import com.example.mp3diddly.datastorage.DataStorage;
-import com.example.mp3diddly.http.HTTP_Server;
+import com.example.mpfree.datastorage.DataStorage;
+import com.example.mpfree.http.HTTP_Server;
 
 
 import android.os.Bundle;
@@ -73,8 +73,7 @@ public class Activity_Main extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-		
-		
+				
 		Config.DeviceID = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
 		
 		mET_SearchTerm = (EditText) findViewById(R.id.ET_Search_Term);

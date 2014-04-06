@@ -1,7 +1,7 @@
-package com.example.mp3diddly;
+package com.example.mpfree;
 
-import com.example.mp3diddly.datastorage.DataStorage;
 import com.example.mp3diddly.R;
+import com.example.mpfree.datastorage.DataStorage;
 
 import android.app.Activity;
 import android.content.Context;

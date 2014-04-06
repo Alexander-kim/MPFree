@@ -1,4 +1,4 @@
-package com.example.mp3diddly;
+package com.example.mpfree;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,9 +28,9 @@ import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.SimpleAdapter;
 
-import com.example.mp3diddly.datastorage.DataStorage;
-import com.example.mp3diddly.http.HTTP_Server;
 import com.example.mp3diddly.R;
+import com.example.mpfree.datastorage.DataStorage;
+import com.example.mpfree.http.HTTP_Server;
 
 
 public class Popup_Status 

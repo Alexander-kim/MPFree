@@ -1,4 +1,4 @@
-package com.example.mp3diddly;
+package com.example.mpfree;
 
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -9,8 +9,8 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.example.mp3diddly.datastorage.DataStorage;
-import com.example.mp3diddly.http.HTTP_Server;
+import com.example.mpfree.datastorage.DataStorage;
+import com.example.mpfree.http.HTTP_Server;
 
 import android.app.Service;
 import android.content.BroadcastReceiver;

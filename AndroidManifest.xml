@@ -17,7 +17,7 @@
         android:theme="@style/AppTheme" >
         
         <activity
-            android:name="com.example.mp3diddly.Activity_Main"
+            android:name="com.example.mpfree.Activity_Main"
             android:label="@string/app_name" 
             android:screenOrientation="portrait">
             
@@ -29,7 +29,7 @@
         </activity>
                                      
         
-		<receiver android:name="com.example.mp3diddly.Broadcast_CheckStatus">
+		<receiver android:name="com.example.mpfree.Broadcast_CheckStatus">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />  
                 <action android:name="android.net.conn.INTERNET" />
@@ -38,7 +38,7 @@
 	    </receiver>        
         
         
-		<receiver android:name="com.example.mp3diddly.Broadcast_NewFiles">
+		<receiver android:name="com.example.mpfree.Broadcast_NewFiles">
             <intent-filter>
                 <action android:name="com.tutorialspoint.NEW_FILE" />
             </intent-filter>		    

@@ -1,4 +1,6 @@
-package com.example.mp3diddly;
+package com.example.mpfree;
+
+import com.example.mp3diddly.R;
 
 import android.app.Notification;
 import android.app.NotificationManager;

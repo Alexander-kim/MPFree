@@ -1,4 +1,4 @@
-package com.example.mp3diddly.http;
+package com.example.mpfree.http;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
