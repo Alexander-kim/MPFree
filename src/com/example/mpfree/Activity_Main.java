@@ -11,7 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.example.mp3diddly.R;
+import com.example.mpfree.R;
 import com.example.mpfree.datastorage.DataStorage;
 import com.example.mpfree.http.HTTP_Server;
 
@@ -164,7 +164,7 @@ public class Activity_Main extends Activity
 		AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
 		am.setRepeating(AlarmManager.RTC_WAKEUP, 1000, lInterval * 1000, pi);	
 		
-		Log.v("mp3diddly", "Status check interval: " + lInterval);	
+		Log.v("mpfree", "Status check interval: " + lInterval);	
 	}
 
 

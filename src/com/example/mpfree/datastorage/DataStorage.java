@@ -9,7 +9,7 @@ import android.preference.PreferenceManager;
 public class DataStorage 
 {	
 	private static DataStorage mInstance;
-	private final String PREFSNAME = "MP3Thing";
+	private final String PREFSNAME = "MPFREE";
 	private SharedPreferences mPreferences;
 	private Context mContext;
 	private SharedPreferences.Editor mEditor;

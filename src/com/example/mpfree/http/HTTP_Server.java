@@ -47,11 +47,10 @@ public class HTTP_Server
 	public boolean downloadFile(String pURL, String pDirectory, String pFileName) 
 	{
 		boolean lRetval = false;
-		Log.v("mp3diddly", "downloadFile(1): |" + pURL + "|" + pDirectory + "|" + pFileName + "|");
+		Log.v("mpfree", "downloadFile(1): |" + pURL + "|" + pDirectory + "|" + pFileName + "|");
 		
 		if (pURL != null && !pURL.isEmpty() && pDirectory != null && !pDirectory.isEmpty() && pFileName != null && !pFileName.isEmpty())
 		{
-			Log.v("mp3diddly", "downloadFile(2):");
 		    try 
 		    {
 		    	int count = 0;
@@ -79,15 +78,15 @@ public class HTTP_Server
 		    }
 		    catch (IllegalStateException e) 
 		    {
-				Log.v("mp3diddly", "downloadFile(Exception): " + e.getMessage());
+				Log.v("mpfree", "downloadFile(Exception): " + e.getMessage());
 		    } 
 		    catch (IOException e) 
 		    {
-				Log.v("mp3diddly", "downloadFile(Exception): " + e.getMessage());
+				Log.v("mpfree", "downloadFile(Exception): " + e.getMessage());
 		    }
 		    catch (Exception e) 
 		    {
-				Log.v("mp3diddly", "downloadFile(Exception): " + e.getMessage());
+				Log.v("mpfree", "downloadFile(Exception): " + e.getMessage());
 		    }
 		} // if (pURL...
 

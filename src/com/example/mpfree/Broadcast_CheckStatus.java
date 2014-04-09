@@ -27,7 +27,7 @@ import android.widget.Toast;
 
 public class Broadcast_CheckStatus extends BroadcastReceiver
 {
-	private final String URL_STATUS = "/mp3diddly/Status.php";
+	private final String URL_STATUS = "/mpfree/Status.php";
 	private DataStorage mStorage;
 	private String mDeviceId;
 	
@@ -48,7 +48,7 @@ public class Broadcast_CheckStatus extends BroadcastReceiver
 		@Override
 		protected Void doInBackground(Context... lParams) 
 		{			
-			Log.v("mp3diddly", "checking for new downloads ...");			
+			Log.v("mpfree", "checking for new downloads ...");			
 			String lStatusData = "";
 			String lServer = "";
 			String lURI = "";
@@ -119,12 +119,12 @@ public class Broadcast_CheckStatus extends BroadcastReceiver
 							    	if (lYTID != null && !lYTID.isEmpty() && lStat != null && !lStat.isEmpty())
 							    	{
 										String lDownloadString = "http://" + lServer + Config.URL_DOWNLOAD + "?uid=" + Config.DeviceID + "&vid=" + lYTID;
-										Log.v("mp3diddly", "Requests status: " + lStat + "/" + Config.TRANSCODING_STATUS.get(lStat));
+										Log.v("mpfree", "Requests status: " + lStat + "/" + Config.TRANSCODING_STATUS.get(lStat));
 												
 										// File is ready to download
 										if (lStat.equals("2"))
 										{
-											Log.v("mp3diddly", "Downloading: " + lYTID + " / " + lStat);
+											Log.v("mpfree", "Downloading: " + lYTID + " / " + lStat);
 											
 											// Build file name
 											String lFileName = lDesc.replaceAll("[^\\w\\d\\.\\-_]", "_");
@@ -145,7 +145,7 @@ public class Broadcast_CheckStatus extends BroadcastReceiver
 							}
 							catch (Exception lEx)
 							{
-								Log.v("mp3diddly", "Exception: " + lEx.getMessage());
+								Log.v("mpfree", "Exception: " + lEx.getMessage());
 							}
 						} // for (int i ...
 					} // if (lJSONR...

@@ -1,6 +1,6 @@
 package com.example.mpfree;
 
-import com.example.mp3diddly.R;
+import com.example.mpfree.R;
 import com.example.mpfree.datastorage.DataStorage;
 
 import android.app.Activity;
@@ -100,7 +100,7 @@ public class Popup_Settings
 						catch (Exception lEx)
 						{
 							Toast.makeText(mParentActivity, "Exception(0): " + lEx.getMessage(), Toast.LENGTH_LONG).show();
-				    		Log.v("MP3Diddly", "Exception(0): " + lEx.getMessage());   
+				    		Log.v("mpfree", "Exception(0): " + lEx.getMessage());   
 						}
 						
 						// 2. Save config params
@@ -143,7 +143,7 @@ public class Popup_Settings
     	catch (Exception lEx)
     	{
     		Toast.makeText(mParentActivity, "Exception(1): " + lEx.getMessage(), Toast.LENGTH_LONG).show();
-    		Log.v("MP3Diddly", "Exception(1): " + lEx.getMessage());        		
+    		Log.v("mpfree", "Exception(1): " + lEx.getMessage());        		
     	}		
 	}
 	

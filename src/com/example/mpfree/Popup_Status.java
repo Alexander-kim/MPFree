@@ -28,7 +28,7 @@ import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.SimpleAdapter;
 
-import com.example.mp3diddly.R;
+import com.example.mpfree.R;
 import com.example.mpfree.datastorage.DataStorage;
 import com.example.mpfree.http.HTTP_Server;
 
@@ -75,7 +75,7 @@ public class Popup_Status
     		   										  new int[] { R.id.userIcon, R.id.TV_Song_Descr, R.id.TV_Song_Status });
     		mLV_Status.setAdapter(mDataAdapter);
 
-
+Log.v("mpfree", "showWindow(): ");
     		
     		/*
     		 * Cancel button event handler
@@ -116,7 +116,7 @@ public class Popup_Status
     	{
 
     		Toast.makeText(mParentActivity, "Exception Status.showWindow(): " + lEx.getMessage(), Toast.LENGTH_LONG).show();
-    		Log.v("MP3Thing", "Error status activity: " + lEx.getMessage());        		
+    		Log.v("mpfree", "Error status activity: " + lEx.getMessage());        		
     	}		
 	}	
 	

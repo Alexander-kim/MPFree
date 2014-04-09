@@ -12,11 +12,11 @@ public class Config
 	public final static String APP_VERSION = "0.1";
 	public final static String DEFAULT_SERVER = "mp3.buglist.io";
 	
-	public final static String URL_STATUS = "/mp3diddly/Status.php";
-	public final static String URL_SEARCH = "/mp3diddly/YTSearch.php";
-	public final static String URL_DOWNLOAD = "/mp3diddly/Download.php";
-	public final static String URL_TRANSCODE = "/mp3diddly/Transcoder.php";
-	public final static String URL_WATCH = "/mp3diddly/v.php";
+	public final static String URL_STATUS = "/mpfree/Status.php";
+	public final static String URL_SEARCH = "/mpfree/YTSearch.php";
+	public final static String URL_DOWNLOAD = "/mpfree/Download.php";
+	public final static String URL_TRANSCODE = "/mpfree/Transcoder.php";
+	public final static String URL_WATCH = "/mpfree/v.php";
 
 	public final static String TITLE_FILENAME = "filename";	
 	public final static String TITLE_DESCRIPTION = "description";	

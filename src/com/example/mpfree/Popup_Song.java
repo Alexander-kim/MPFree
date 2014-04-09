@@ -31,7 +31,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mp3diddly.R;
+import com.example.mpfree.R;
 import com.example.mpfree.datastorage.DataStorage;
 import com.example.mpfree.http.HTTP_Server;
 
