@@ -123,9 +123,9 @@ public class Popup_Settings
 			EditText lServer = (EditText) popupView.findViewById(R.id.ET_Server);
 			TextView lDeviceID = (TextView) popupView.findViewById(R.id.TV_DeviceIDValue);
 			
-			lServer.setText(mStorage.getStringElement("server"));		
-			lInterval.setSelection(mStorage.getIntElement("interval"));	
-			lLocation.setSelection(mStorage.getIntElement("location"));
+			lServer.setText(mStorage.getStringElement(Config.TITLE_SERVER));		
+			lInterval.setSelection(mStorage.getIntElement(Config.TITLE_INTERVAL));	
+			lLocation.setSelection(mStorage.getIntElement(Config.TITLE_LOCATION));
 			lDeviceID.setText(Config.DeviceID);
 
 			
@@ -133,7 +133,6 @@ public class Popup_Settings
 			 * Show popup window
 			 */
 			View lAnchor = ((Activity) mParentActivity).findViewById(R.id.action_status);
-//			popupWindow.showAsDropDown(lAnchor, 50, 50);		       
 			popupWindow.showAtLocation(lAnchor, Gravity.CENTER, 0, 0);			
 			
 			

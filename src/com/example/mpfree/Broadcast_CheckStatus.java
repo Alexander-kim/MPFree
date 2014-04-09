@@ -1,8 +1,6 @@
 package com.example.mpfree;
 
-import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -12,22 +10,18 @@ import org.json.JSONObject;
 import com.example.mpfree.datastorage.DataStorage;
 import com.example.mpfree.http.HTTP_Server;
 
-import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.IBinder;
 import android.provider.Settings.Secure;
 import android.util.Log;
-import android.widget.Toast;
 
 
 
 
 public class Broadcast_CheckStatus extends BroadcastReceiver
 {
-	private final String URL_STATUS = "/mpfree/Status.php";
 	private DataStorage mStorage;
 	private String mDeviceId;
 	
@@ -71,7 +65,7 @@ public class Broadcast_CheckStatus extends BroadcastReceiver
 
 				lLocationIndex =  mStorage.getIntElement(Config.TITLE_LOCATION);	
 				lOutputDir = Config.LOCATION[lLocationIndex];
-				lURI = URL_STATUS + "?uid=" + Config.DeviceID;
+				lURI = Config.URL_STATUS + "?uid=" + Config.DeviceID;
 				lServer =  mStorage.getStringElement(Config.TITLE_SERVER);			
 				lStatusData = new HTTP_Server(lContext).sendGETRequest(lServer, lURI);
 			}

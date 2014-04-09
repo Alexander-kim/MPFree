@@ -74,8 +74,6 @@ public class Popup_Status
     		mDataAdapter = new SimpleAdapter(mParentActivity, (List<? extends Map<String, ?>>) mListData, R.layout.item_status, new String[] { "userIcon", "TV_Song_Descr", "TV_Song_Status" },
     		   										  new int[] { R.id.userIcon, R.id.TV_Song_Descr, R.id.TV_Song_Status });
     		mLV_Status.setAdapter(mDataAdapter);
-
-Log.v("mpfree", "showWindow(): ");
     		
     		/*
     		 * Cancel button event handler
