@@ -1,16 +1,27 @@
 <?
-  include_once('core/Videos.php');
-  include_once('core/Files.php');
   include_once('core/Database.php');
+  include_once('core/Files.php');
+  include_once('core/Security.php');
+  include_once('core/Videos.php');
 
   $gUID = isset($_GET['uid'])?$_GET['uid']:'';
   $gVID = isset($_GET['vid'])?$_GET['vid']:'';
 
 
+  if (Security::containsIllegalChars($gUID))
+  {
+    Log::writeLog(1, $_SERVER["SCRIPT_NAME"], "User ID \"$gUID\" contains illegal characters.");
+  }
+  elseif (Security::containsIllegalChars($gVID))
+  {
+    Log::writeLog(1, $_SERVER["SCRIPT_NAME"], "Video ID \"$gVID\" contains illegal characters.");
+  }
+
+
   /*
    * Download the file to the users system.
    */
-  if (strlen($gUID) > 0 && strlen($gVID) > 0)
+  elseif (strlen($gUID) > 0 && strlen($gVID) > 0)
   {
     $lDB = new Database();
     $lDB->connect();

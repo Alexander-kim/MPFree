@@ -1,6 +1,7 @@
 <?
-  include_once("core/Videos.php");
   include_once("core/Database.php");
+  include_once("core/Security.php");
+  include_once("core/Videos.php");
 
 
   $gUID = isset($_GET['uid'])?$_GET['uid']:'';
@@ -8,9 +9,17 @@
   if (strlen($gUID) <= 0)
     $gUID = isset($_POST['uid'])?$_POST['uid']:'';
 
+
+
+
   echo "{\n  \"records\": [\n";
 
-  if (strlen($gUID) >= 0)
+                  
+  if (Security::containsIllegalChars($gUID))
+  {
+    Log::writeLog(1, $_SERVER["SCRIPT_NAME"], "User ID \"$gUID\" contains illegal characters.");
+  }
+  elseif (strlen($gUID) >= 0)
   {
     $lDB = new Database();
     $lDB->connect();

@@ -3,20 +3,12 @@
 class Config
 {
   // Woozabi settings
-  public static $FilesRootDir = '/var/www/mp3diddly/transcoder/files/';
-#  public static $WoozabiRoot = '/var/www/mp3diddly';
-#  public static $WoozabiWebRoot = '/mp3diddly';
-#  public static $WoozabiHostName = 'localhost';
-#  public static $WoozabiSearchTitle = ''; //Enter Youtube ID';
-#  public static $WoozabiAdminRole = 0;
-#  public static $MaxPlayTime = 600;
- 
-  
+  public static $FilesRootDir = '/var/www/mpfree/transcoder/files/';
   
   // Logging and debugging
   public static $LOGLEVEL = 1;
-  public static $LOGFILEPATH = '/tmp/logs/woozabi.log';
-  public static $REMOTELOGFILEPATH = '/tmp/logs/remote.log';
+  public static $LOGFILEPATH = '/tmp/mpfree.log';
+  public static $REMOTELOGFILEPATH = '/tmp/remote.log';
 
   // DB settings
   public static $DBHost = 'localhost';

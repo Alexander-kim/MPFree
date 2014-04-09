@@ -7,28 +7,37 @@
   include_once('core/Database.php');
 
   
+
   
   /*
    * Initialize parameter variables.
    */
-  $gVideoID = isset($_POST['vid'])?$_POST['vid']:$_GET['vid'];
-  $gRequestingUID = isset($_POST['uid'])?$_POST['uid']:$_GET['uid'];
-  
-  
-  if (strlen($gRequestingUID) > 0 && strlen($gVideoID) > 0 && Youtube::validYoutubeID($gVideoID))
+  $gVID = isset($_POST['vid'])?$_POST['vid']:$_GET['vid'];
+  $gUID = isset($_POST['uid'])?$_POST['uid']:$_GET['uid'];
+
+
+  if (Security::containsIllegalChars($gUID))
+  {
+    Log::writeLog(1, $_SERVER["SCRIPT_NAME"], "User ID \"$gUID\" contains illegal characters.");
+  }
+  elseif (Security::containsIllegalChars($gVID))
+  {
+    Log::writeLog(1, $_SERVER["SCRIPT_NAME"], "Video ID \"$gVID\" contains illegal characters.");
+  }
+  elseif (strlen($gUID) > 0 && strlen($gVID) > 0 && Youtube::validYoutubeID($gVID))
   {
     /*
      * Find video entry.
      */
     $gLocalSrch = new Videos();
-    $gLocalSrchResult = $gLocalSrch->getSongByID($gVideoID);
+    $gLocalSrchResult = $gLocalSrch->getSongByID($gVID);
     $lVideoTitle = (strlen($gLocalSrchResult[VideoTitle])>64)?substr($gLocalSrchResult[VideoTitle], 0, 64)."...":$gLocalSrchResult[VideoTitle];
 	
     /*
      * Insert transcode request into db.
      */
     $lClientIP = isset($_SERVER['HTTP_X_FORWARDED_FOR'])?$_SERVER['HTTP_X_FORWARDED_FOR']:$_SERVER['REMOTE_ADDR'];
-    $lStatement = "INSERT INTO Conversions (Timestamp, VideoID, RequestingUID, ClientIP, Description) Values(NOW(), '$gVideoID', '$gRequestingUID', '$lClientIP', '$lVideoTitle')";
+    $lStatement = "INSERT INTO Conversions (Timestamp, VideoID, RequestingUID, ClientIP, Description) Values(NOW(), '$gVID', '$gUID', '$lClientIP', '$lVideoTitle')";
   
     $lDB = new Database();
     $lDB->connect();  
