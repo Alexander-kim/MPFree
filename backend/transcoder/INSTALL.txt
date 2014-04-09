@@ -1,0 +1,18 @@
+required packages
+-----------------
+
+apache
+mysql
+php
+php-mysql
+youtube-dl
+lame
+ffmpeg
+
+required mysql user
+-------------------
+
+CREATE USER 'mpfree'@'localhost' IDENTIFIED BY 'mpfree';
+GRANT ALL PRIVILEGES ON * . * TO 'mp3free@'localhost';
+FLUSH PRIVILEGES;
+
